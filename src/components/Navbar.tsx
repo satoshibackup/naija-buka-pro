@@ -34,9 +34,11 @@ export default function Navbar() {
               {siteSettings.logo ? (
                 <img src={siteSettings.logo} alt={siteSettings.brandName} className="h-10 w-auto object-contain" />
               ) : (
-                <Leaf className="text-accent fill-accent" size={24} />
+                <>
+                  <Leaf className="text-accent fill-accent" size={24} />
+                  <span className="uppercase tracking-tighter">{siteSettings.brandName}</span>
+                </>
               )}
-              <span className="uppercase tracking-tighter">{siteSettings.brandName}</span>
             </Link>
           </div>
 
