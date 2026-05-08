@@ -25,48 +25,54 @@ export default function CartSlider({ open, setOpen }: CartSliderProps) {
       {/* Slide-out Panel Overlay */}
       {open && (
         <div 
-          className="fixed inset-0 bg-black/60 z-50 backdrop-blur-md transition-opacity duration-500"
+          className="fixed inset-0 bg-black/40 z-50 backdrop-blur-sm transition-opacity duration-500"
           onClick={() => setOpen(false)}
         />
       )}
 
       {/* Slide-out Panel */}
-      <div className={`fixed top-0 right-0 h-full w-full max-w-lg bg-cream z-[60] shadow-2xl transform transition-transform duration-500 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 h-full w-full max-w-lg bg-white z-[60] shadow-2xl transform transition-transform duration-500 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex flex-col h-full">
-          <div className="p-10 border-b border-primary/5 flex justify-between items-center bg-primary text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-            <h2 className="text-3xl font-black flex items-center gap-3 relative z-10 tracking-tighter uppercase">
-              <ShoppingCart className="text-accent" size={32} /> Your Pot
-            </h2>
-            <button onClick={() => setOpen(false)} className="hover:rotate-90 transition-transform duration-300 relative z-10 bg-white/10 p-2 rounded-xl">
-              <X size={28} />
+          {/* Header - Refined and Calm */}
+          <div className="bg-primary p-6 flex justify-between items-center relative overflow-hidden">
+            <div className="flex items-center gap-2 relative z-10">
+              <ShoppingCart className="text-accent" size={20} />
+              <h2 className="text-xl font-semibold text-white">Your Cart</h2>
+            </div>
+            <button 
+              onClick={() => setOpen(false)} 
+              className="text-white/80 hover:text-white transition-colors relative z-10 p-1"
+            >
+              <X size={20} />
             </button>
           </div>
 
-          <div className="flex-grow overflow-y-auto p-10">
+          <div className="flex-grow overflow-y-auto p-8">
             {cart.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-20">
-                <span className="text-8xl mb-6 grayscale animate-pulse">🍲</span>
-                <h3 className="text-3xl font-black text-gray-900 tracking-tighter uppercase">Your pot is empty</h3>
-                <p className="text-gray-500 mt-4 font-medium max-w-[250px]">The fire is burning but there's no food in the pot yet!</p>
+                <span className="text-6xl mb-6 opacity-20">🍲</span>
+                <h3 className="text-xl font-semibold text-gray-900">Your cart is empty</h3>
+                <p className="text-gray-500 mt-2 font-medium max-w-[250px]">Choose some delicious dishes from our menu to get started.</p>
               </div>
             ) : (
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {cart.map((item) => (
-                  <div key={item.id} className="flex gap-6 items-center group">
-                    <div className="relative shrink-0 overflow-hidden rounded-[1.5rem] shadow-lg">
-                      <img src={item.image} alt={item.name} className="w-24 h-24 object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div key={item.id} className="flex gap-4 items-center group">
+                    <div className="relative shrink-0 overflow-hidden rounded-2xl shadow-sm border border-gray-100">
+                      <img src={item.image} alt={item.name} className="w-20 h-20 object-cover" />
                     </div>
                     <div className="flex-grow">
-                      <h4 className="font-black text-xl text-gray-900 tracking-tight leading-none mb-1">{item.name}</h4>
-                      <p className="text-primary font-black text-lg tracking-tighter">₦{item.price.toLocaleString()}</p>
-                      <div className="flex items-center gap-4 mt-3">
-                        <div className="flex items-center bg-gray-100 rounded-2xl p-1 border border-gray-200">
-                          <button onClick={() => updateQuantity(item.id, -1)} className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-xl transition-all shadow-sm"><Minus size={14} /></button>
-                          <span className="px-4 font-black text-gray-900">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, 1)} className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-xl transition-all shadow-sm"><Plus size={14} /></button>
+                      <h4 className="font-medium text-gray-900 mb-1">{item.name}</h4>
+                      <p className="text-primary font-semibold text-lg">₦{item.price.toLocaleString()}</p>
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-100">
+                          <button onClick={() => updateQuantity(item.id, -1)} className="w-7 h-7 flex items-center justify-center hover:bg-white rounded-lg transition-all"><Minus size={12} /></button>
+                          <span className="px-3 font-semibold text-gray-900 text-sm">{item.quantity}</span>
+                          <button onClick={() => updateQuantity(item.id, 1)} className="w-7 h-7 flex items-center justify-center hover:bg-white rounded-lg transition-all"><Plus size={12} /></button>
                         </div>
-                        <button onClick={() => removeFromCart(item.id)} className="text-red-400 hover:text-red-600 transition-colors"><Trash2 size={20} /></button>
+                        <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition-colors">
+                          <Trash2 size={18} />
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -76,15 +82,15 @@ export default function CartSlider({ open, setOpen }: CartSliderProps) {
           </div>
 
           {cart.length > 0 && (
-            <div className="p-10 border-t border-primary/5 bg-white shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
-              <div className="flex justify-between items-center mb-8">
-                <span className="text-gray-400 font-bold uppercase tracking-widest text-xs">Total Amount</span>
-                <span className="text-4xl font-black text-primary tracking-tighter italic">₦{getTotal().toLocaleString()}</span>
+            <div className="p-8 border-t border-gray-100 bg-white">
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-sm text-gray-500 uppercase tracking-wide">Total</span>
+                <span className="text-2xl font-bold text-primary tracking-tight">₦{getTotal().toLocaleString()}</span>
               </div>
               <Link
                 href="/cart"
                 onClick={() => setOpen(false)}
-                className="w-full bg-accent text-primary py-6 rounded-[2rem] font-black text-xl text-center block shadow-2xl hover:bg-primary hover:text-accent transition-all duration-300 transform hover:-translate-y-1 tracking-tighter uppercase"
+                className="w-full bg-accent text-primary py-4 rounded-full font-semibold text-lg text-center block shadow-lg shadow-accent/20 hover:scale-[1.02] transition-all duration-300"
               >
                 Checkout Now
               </Link>
