@@ -16,13 +16,14 @@
   "heroTitle": "Hot Amala & Correct Soup in Lagos",
   "heroSubtitle": "We serve fresh, hot Nigerian meals daily. Order online for pickup or delivery.",
   "heroImages": [
-    "https://images.unsplash.com/photo-1544025162-d76694265947",
-    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445"
+    "https://i.pinimg.com/736x/78/0e/b7/780eb70a10c11f8221bf145870e8c9ca.jpg",
+    "https://i.pinimg.com/736x/71/a5/cf/71a5cfebe17e280415a68adf07f4daff.jpg",
+    "https://i.pinimg.com/1200x/db/28/5a/db285a12ba7b0454bdcac68c636e36e6.jpg"
   ],
   "cateringEnabled": true,
   "cateringTitle": "Planning a Party?",
   "cateringText": "We handle bulk orders for weddings, birthdays, and corporate events.",
-  "cateringImage": "https://images.unsplash.com/photo-1555244162-803834f70033",
+  "cateringImage": "https://i.pinimg.com/control1/1200x/73/f8/a9/73f8a962194665f8ff4a72d0267f0fff.jpg",
   "cateringButtonText": "Get a Custom Quote",
   "cateringButtonLink": "https://wa.me/2348012345678",
   "deliveryMode": "flat",
@@ -34,7 +35,13 @@
   "aboutText": "From our pot to your plate, we bring you the most authentic flavors of Nigeria. Our journey started in a small kitchen with a big dream: to share the warmth and richness of our culinary heritage with the world.",
   "aboutImage": "https://images.unsplash.com/photo-1555244162-803834f70033",
   "deliveryZones": [
-    {"name": "Yaba", "fee": 1000},
-    {"name": "Lekki", "fee": 2000}
+    {
+      "name": "Yaba",
+      "fee": 1000
+    },
+    {
+      "name": "Lekki",
+      "fee": 2000
+    }
   ]
 }

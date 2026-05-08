@@ -5,7 +5,7 @@
     "category": "Rice",
     "price": 2500,
     "description": "Authentic firewood smokey jollof served with fried plantain and your choice of protein.",
-    "image": "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b",
+    "image": "https://i.pinimg.com/control1/1200x/5b/d3/b1/5bd3b1364e2822d6bb555c597e790665.jpg",
     "stock": 15,
     "featured": true
   },
@@ -15,7 +15,7 @@
     "category": "Soups",
     "price": 5500,
     "description": "Rich melon seed soup with assorted meat, stockfish, and spinach. Best with Pounded Yam.",
-    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445",
+    "image": "https://i.pinimg.com/736x/cc/cd/54/cccd5478be8e778fb553e657c53291e9.jpg",
     "stock": 10,
     "featured": true
   },
@@ -25,7 +25,7 @@
     "category": "Grills",
     "price": 3500,
     "description": "Thinly sliced grilled beef spiced with authentic Yaji. Served with onions and tomatoes.",
-    "image": "https://images.unsplash.com/photo-1526318472351-c75fcf070305",
+    "image": "https://i.pinimg.com/1200x/ce/30/f6/ce30f674a8ee71424557b9a3cd41b5a1.jpg",
     "stock": 20,
     "featured": true
   },
@@ -35,7 +35,7 @@
     "category": "Sides",
     "price": 1000,
     "description": "Freshly pounded local yam, smooth and stretchy. Perfect for any of our soups.",
-    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    "image": "https://i.pinimg.com/1200x/2d/18/b6/2d18b666f22020248327ecdffafb52cf.jpg",
     "stock": 50,
     "featured": false
   },
@@ -45,7 +45,7 @@
     "category": "Drinks",
     "price": 1200,
     "description": "Chilled hibiscus flower drink infused with ginger, cloves, and pineapple.",
-    "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd",
+    "image": "https://i.pinimg.com/1200x/fa/4a/8e/fa4a8ec95b0a9b3b41e1038b12850bfc.jpg",
     "stock": 30,
     "featured": false
   }

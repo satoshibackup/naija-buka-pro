@@ -8,9 +8,12 @@ export default function AdminPage() {
     window.CMS_MANUAL_INIT = true
     const script = document.createElement('script')
     script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js'
-    script.async = true
+    script.onload = () => {
+      // @ts-ignore
+      window.CMS.init()
+    }
     document.body.appendChild(script)
   }, [])
   
-  return <div id="nc-root" />
+  return <div id="nc-root" style={{minHeight: '100vh'}} />
 }

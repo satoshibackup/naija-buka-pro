@@ -1,6 +1,6 @@
 backend:
-  name: git-gateway
-  branch: main
+  name: test-repo
+local_backend: true
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
@@ -37,9 +37,9 @@ collections:
           - {label: "Catering Button Text", name: "cateringButtonText", widget: "string"}
           - {label: "Catering Button Link", name: "cateringButtonLink", widget: "string"}
           - {label: "Delivery Mode", name: "deliveryMode", widget: "select", options: ["flat", "free", "custom"]}
-          - {label: "Flat Delivery Fee", name: "deliveryFlatFee", widget: "number", condition: {field: "deliveryMode", value: "flat"}}
-          - {label: "Free Delivery Threshold", name: "deliveryFreeThreshold", widget: "number", condition: {field: "deliveryMode", value: "flat"}}
-          - {label: "Custom Delivery Text", name: "deliveryCustomText", widget: "text", condition: {field: "deliveryMode", value: "custom"}}
+          - {label: "Flat Delivery Fee", name: "deliveryFlatFee", widget: "number"}
+          - {label: "Free Delivery Threshold", name: "deliveryFreeThreshold", widget: "number"}
+          - {label: "Custom Delivery Text", name: "deliveryCustomText", widget: "text"}
           - {label: "Delivery Areas", name: "deliveryAreas", widget: "string", hint: "Comma separated list of areas"}
           - {label: "About Title", name: "aboutTitle", widget: "string"}
           - {label: "About Text", name: "aboutText", widget: "text"}
