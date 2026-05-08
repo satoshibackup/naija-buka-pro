@@ -14,5 +14,11 @@
   "tiktok": "",
   "aboutTitle": "Our Story",
   "aboutText": "From our pot to your plate since 2010, Naija Buka Pro has been the cornerstone of authentic flavors in Lagos. We believe that good food is a right, not a luxury. Our recipes are guarded secrets, passed down through generations of master chefs who understand the soul of Nigerian cuisine.",
-  "aboutImage": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=800&auto=format&fit=crop"
+  "aboutImage": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=800&auto=format&fit=crop",
+  "deliveryMode": "flat",
+  "deliveryFlatFee": 1000,
+  "deliveryFreeThreshold": 0,
+  "deliveryCustomText": "Within Lagos: ₦1,000 | Outside Lagos: ₦2,000 | Pickup: Free. Call 0803xxx for Island rates.",
+  "deliveryAreas": "We deliver to Yaba, Surulere, Ikeja, Lekki Phase 1",
+  "showDeliveryCalculator": true
 }

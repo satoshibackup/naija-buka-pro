@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { LayoutDashboard, LogIn, LogOut, Package, Image as ImageIcon, Save, ArrowLeft, Palette, Type, Phone, Share2, Info } from 'lucide-react';
+import { LayoutDashboard, LogIn, LogOut, Package, Image as ImageIcon, Save, ArrowLeft, Palette, Type, Phone, Share2, Info, Truck } from 'lucide-react';
 import toast from 'react-hot-toast';
 import menuData from '@/../data/menu.json';
 import siteSettingsData from '@/../data/site.json';
@@ -15,7 +15,7 @@ declare global {
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'menu' | 'branding'>('menu');
+  const [activeTab, setActiveTab] = useState<'menu' | 'branding' | 'delivery'>('menu');
   const [items, setItems] = useState(menuData);
   const [siteSettings, setSiteSettings] = useState(siteSettingsData);
   const [loading, setLoading] = useState(true);
@@ -128,6 +128,12 @@ export default function AdminDashboard() {
           >
             <Palette size={20} /> Brand Settings
           </button>
+          <button 
+            onClick={() => setActiveTab('delivery')}
+            className={`w-full flex items-center gap-3 p-4 rounded-xl font-bold transition-all text-sm ${activeTab === 'delivery' ? 'bg-white/10 text-accent' : 'text-white/60 hover:bg-white/5'}`}
+          >
+            <Truck size={20} /> Delivery Logic
+          </button>
         </nav>
         <div className="p-6 mt-auto">
           <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
@@ -152,11 +158,11 @@ export default function AdminDashboard() {
       <main className="flex-grow overflow-auto flex flex-col">
         <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 p-6 flex flex-col md:flex-row justify-between items-center sticky top-0 z-20 gap-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-              {activeTab === 'menu' ? 'Menu Items' : 'Brand Identity'}
+            <h1 className="text-2xl font-bold text-gray-900 tracking-tight capitalize">
+              {activeTab === 'menu' ? 'Menu Items' : activeTab === 'branding' ? 'Brand Identity' : 'Delivery Settings'}
             </h1>
             <p className="text-gray-400 text-xs font-bold mt-1 uppercase tracking-widest">
-              {activeTab === 'menu' ? 'Manage stock, prices & categories' : 'Control colors, socials & about content'}
+              {activeTab === 'menu' ? 'Manage stock, prices & categories' : activeTab === 'branding' ? 'Control colors, socials & about content' : 'Configure how you charge for logistics'}
             </p>
           </div>
           <div className="flex gap-4 w-full md:w-auto">
@@ -170,8 +176,8 @@ export default function AdminDashboard() {
         </header>
 
         <div className="p-6 lg:p-10">
-          {activeTab === 'menu' ? (
-            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+          {activeTab === 'menu' && (
+            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden animate-fade-in">
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead className="bg-gray-50/50 border-b border-gray-100">
@@ -237,9 +243,10 @@ export default function AdminDashboard() {
                 </table>
               </div>
             </div>
-          ) : (
+          )}
+
+          {activeTab === 'branding' && (
             <div className="max-w-4xl space-y-8 animate-fade-in">
-              {/* Branding Section */}
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
                 <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-50">
                   <Palette className="text-primary" size={24} />
@@ -283,7 +290,6 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* Social Media Section */}
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
                 <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-50">
                   <Share2 className="text-primary" size={24} />
@@ -305,7 +311,6 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* About Us Section */}
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
                 <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-50">
                   <Info className="text-primary" size={24} />
@@ -331,16 +336,84 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               </div>
-              
-              <div className="bg-primary p-12 rounded-3xl text-center">
-                 <h4 className="text-white font-bold mb-4">Need Advanced Customization?</h4>
-                 <p className="text-white/60 text-sm mb-8">Access the full Decap CMS for media uploads, detailed SEO, and file-level management.</p>
-                 <button 
-                  onClick={() => window.open('/admin/index.html', '_blank')}
-                  className="bg-accent text-primary px-8 py-3 rounded-xl font-bold text-sm hover:bg-white transition-all"
-                >
-                  OPEN DECAP CMS
-                </button>
+            </div>
+          )}
+
+          {activeTab === 'delivery' && (
+            <div className="max-w-4xl space-y-8 animate-fade-in">
+               <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-50">
+                  <Truck className="text-primary" size={24} />
+                  <h3 className="text-lg font-bold text-gray-900 tracking-tight">Delivery Mode</h3>
+                </div>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      {label: 'Flat Fee', value: 'flat', desc: 'Charge a set amount'},
+                      {label: 'Free', value: 'free', desc: 'No delivery charge'},
+                      {label: 'Custom', value: 'custom', desc: 'Manual confirmation'}
+                    ].map((mode) => (
+                      <button
+                        key={mode.value}
+                        onClick={() => handleUpdateSite('deliveryMode', mode.value)}
+                        className={`p-6 rounded-2xl border-2 transition-all text-left group ${siteSettings.deliveryMode === mode.value ? 'border-primary bg-primary/5' : 'border-gray-100 hover:border-primary/20'}`}
+                      >
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${siteSettings.deliveryMode === mode.value ? 'bg-primary text-white' : 'bg-gray-100 text-gray-400 group-hover:bg-primary/10 group-hover:text-primary'}`}>
+                          <Truck size={20} />
+                        </div>
+                        <h4 className="font-bold text-gray-900 mb-1">{mode.label}</h4>
+                        <p className="text-xs text-gray-500 font-medium">{mode.desc}</p>
+                      </button>
+                    ))}
+                  </div>
+
+                  {siteSettings.deliveryMode === 'flat' && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 animate-fade-in">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Flat Delivery Fee (₦)</label>
+                        <input 
+                          type="number" 
+                          value={siteSettings.deliveryFlatFee} 
+                          onChange={(e) => handleUpdateSite('deliveryFlatFee', parseInt(e.target.value))}
+                          className="w-full bg-gray-50 border border-transparent focus:border-primary px-4 py-3 rounded-xl font-bold outline-none transition-all text-sm"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Free Delivery Above (₦)</label>
+                        <input 
+                          type="number" 
+                          value={siteSettings.deliveryFreeThreshold} 
+                          onChange={(e) => handleUpdateSite('deliveryFreeThreshold', parseInt(e.target.value))}
+                          placeholder="0 = disabled"
+                          className="w-full bg-gray-50 border border-transparent focus:border-primary px-4 py-3 rounded-xl font-bold outline-none transition-all text-sm"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {siteSettings.deliveryMode === 'custom' && (
+                    <div className="space-y-2 pt-6 animate-fade-in">
+                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Custom Delivery Rules Text</label>
+                      <textarea 
+                        value={siteSettings.deliveryCustomText} 
+                        onChange={(e) => handleUpdateSite('deliveryCustomText', e.target.value)}
+                        placeholder="e.g. Within Lagos ₦1,000 | Outside ₦2,000 | Pickup Free"
+                        className="w-full bg-gray-50 border border-transparent focus:border-primary px-4 py-3 rounded-xl font-medium outline-none transition-all text-sm h-32 resize-none"
+                      />
+                    </div>
+                  )}
+
+                  <div className="space-y-2 pt-6 border-t border-gray-50">
+                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Covered Delivery Areas</label>
+                    <input 
+                      type="text" 
+                      value={siteSettings.deliveryAreas} 
+                      onChange={(e) => handleUpdateSite('deliveryAreas', e.target.value)}
+                      placeholder="e.g. Yaba, Surulere, Ikeja, Lekki Phase 1"
+                      className="w-full bg-gray-50 border border-transparent focus:border-primary px-4 py-3 rounded-xl font-bold outline-none transition-all text-sm"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           )}

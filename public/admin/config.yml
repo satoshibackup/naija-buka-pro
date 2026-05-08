@@ -49,3 +49,16 @@ collections:
           - { label: "About Text", name: "aboutText", widget: "text" }
           - { label: "About Image", name: "aboutImage", widget: "image" }
           - { label: "Address", name: "address", widget: "text" }
+          
+          # Delivery Settings
+          - label: "Delivery Mode"
+            name: "deliveryMode"
+            widget: "select"
+            options: 
+              - {label: "Flat Fee", value: "flat"}
+              - {label: "Free Delivery", value: "free"}
+              - {label: "Custom Rules", value: "custom"}
+          - {label: "Flat Delivery Fee (₦)", name: "deliveryFlatFee", widget: "number", default: 1000}
+          - {label: "Free Delivery Above (₦)", name: "deliveryFreeThreshold", widget: "number", default: 0, hint: "0 = disabled"}
+          - {label: "Custom Delivery Text", name: "deliveryCustomText", widget: "text", hint: "Shown in 'custom' mode"}
+          - {label: "Delivery Areas", name: "deliveryAreas", widget: "string", hint: "Areas you cover"}

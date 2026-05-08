@@ -1,11 +1,12 @@
 'use client';
 
 import { useCartStore } from '@/store/useCartStore';
-import { Trash2, Plus, Minus, CreditCard, ArrowLeft, ShieldCheck, Truck, User, Phone, MapPin, FileText } from 'lucide-react';
+import { Trash2, Plus, Minus, CreditCard, ArrowLeft, ShieldCheck, Truck, User, Phone, MapPin, FileText, Info } from 'lucide-react';
 import Link from 'next/link';
 import { usePaystackPayment } from 'react-paystack';
 import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
+import siteSettings from '@/../data/site.json';
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, clearCart, getTotal } = useCartStore();
@@ -24,7 +25,32 @@ export default function CartPage() {
     setMounted(true);
   }, []);
 
-  const total = mounted ? getTotal() : 0;
+  const subtotal = mounted ? getTotal() : 0;
+  
+  // Delivery Logic
+  let deliveryFee = 0;
+  let deliveryLabel = "Delivery";
+  let isCustomDelivery = false;
+
+  if (mounted) {
+    if (siteSettings.deliveryMode === "flat") {
+      const threshold = siteSettings.deliveryFreeThreshold || 0;
+      const isFree = threshold > 0 && subtotal >= threshold;
+      deliveryFee = isFree ? 0 : (siteSettings.deliveryFlatFee || 0);
+      deliveryLabel = deliveryFee === 0 ? "Delivery: Free" : `Delivery: ₦${deliveryFee.toLocaleString()}`;
+    } 
+    else if (siteSettings.deliveryMode === "free") {
+      deliveryFee = 0;
+      deliveryLabel = "Delivery: Free";
+    }
+    else if (siteSettings.deliveryMode === "custom") {
+      deliveryFee = 0;
+      isCustomDelivery = true;
+      deliveryLabel = "Delivery: TBD";
+    }
+  }
+
+  const total = subtotal + deliveryFee;
   
   const config = {
     reference: (new Date()).getTime().toString(),
@@ -105,7 +131,7 @@ export default function CartPage() {
                       <span className="px-4 font-bold text-gray-900">{item.quantity}</span>
                       <button 
                         onClick={() => updateQuantity(item.id, 1)}
-                        className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-lg text-primary transition-all shadow-sm"
+                        className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-xl text-primary transition-all shadow-sm"
                       >
                         <Plus size={16} />
                       </button>
@@ -137,7 +163,7 @@ export default function CartPage() {
                       placeholder="Full Name"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium text-sm"
                     />
                   </div>
                   <div className="relative">
@@ -147,7 +173,7 @@ export default function CartPage() {
                       placeholder="Phone Number"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium text-sm"
                     />
                   </div>
                   <div className="relative">
@@ -156,7 +182,7 @@ export default function CartPage() {
                       placeholder="Delivery Address"
                       value={formData.address}
                       onChange={(e) => setFormData({...formData, address: e.target.value})}
-                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium h-24 resize-none"
+                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium h-24 resize-none text-sm"
                     />
                   </div>
                   <div className="relative">
@@ -165,19 +191,40 @@ export default function CartPage() {
                       placeholder="Order Notes (Optional)"
                       value={formData.notes}
                       onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium h-20 resize-none"
+                      className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium h-20 resize-none text-sm"
                     />
                   </div>
                 </div>
 
+                {/* Delivery Info Box */}
+                {isCustomDelivery && (
+                  <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10 flex gap-3">
+                    <Info className="text-primary shrink-0" size={18} />
+                    <div className="text-xs text-gray-600 leading-relaxed font-medium">
+                      <p className="font-bold text-primary mb-1 uppercase tracking-wider">Custom Delivery Rules:</p>
+                      {siteSettings.deliveryCustomText}
+                      <p className="mt-2 text-[10px] italic opacity-75">* Final delivery cost will be confirmed via WhatsApp after order.</p>
+                    </div>
+                  </div>
+                )}
+                
+                {siteSettings.deliveryAreas && (
+                  <div className="px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 flex items-center gap-3">
+                    <Truck size={14} className="text-gray-400" />
+                    <p className="text-[10px] text-gray-500 font-bold uppercase truncate">Areas: {siteSettings.deliveryAreas}</p>
+                  </div>
+                )}
+
                 <div className="pt-6 border-t border-gray-50">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-gray-500 font-medium">Subtotal</span>
-                    <span className="text-gray-900 font-bold">₦{total.toLocaleString()}</span>
+                    <span className="text-gray-900 font-bold">₦{subtotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center mb-6">
-                    <span className="text-gray-500 font-medium">Delivery</span>
-                    <span className="text-green-600 font-bold">FREE</span>
+                    <span className="text-gray-500 font-medium">{isCustomDelivery ? "Delivery (TBD)" : "Delivery"}</span>
+                    <span className={`font-bold ${deliveryFee === 0 && !isCustomDelivery ? "text-green-600" : "text-gray-900"}`}>
+                      {isCustomDelivery ? "WhatsApp" : deliveryFee === 0 ? "FREE" : `₦${deliveryFee.toLocaleString()}`}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-xl font-bold text-gray-900">Total</span>
@@ -196,7 +243,7 @@ export default function CartPage() {
                 }}
                 className="w-full flex items-center justify-center gap-3 bg-accent text-primary py-5 rounded-2xl hover:bg-primary hover:text-accent transition-all font-bold text-lg shadow-lg shadow-accent/10"
               >
-                <CreditCard size={24} /> PAY WITH PAYSTACK
+                <CreditCard size={24} /> PAY {isCustomDelivery ? "SUBTOTAL" : "WITH PAYSTACK"}
               </button>
 
               <div className="mt-8 space-y-4">
