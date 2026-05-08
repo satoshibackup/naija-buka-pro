@@ -49,6 +49,15 @@ collections:
           - {label: "About Text", name: "aboutText", widget: "text"}
           - {label: "About Image", name: "aboutImage", widget: "image"}
           - {label: "Address", name: "address", widget: "string"}
+          
+          # Catering Section
+          - {label: "Show Catering Section", name: "cateringEnabled", widget: "boolean", default: true, hint: "Turn off if you don't do events"}
+          - {label: "Catering Title", name: "cateringTitle", widget: "string", condition: {field: "cateringEnabled", value: true}}
+          - {label: "Catering Text", name: "cateringText", widget: "text", condition: {field: "cateringEnabled", value: true}}
+          - {label: "Catering Background Image", name: "cateringImage", widget: "image", condition: {field: "cateringEnabled", value: true}}
+          - {label: "Button Text", name: "cateringButtonText", widget: "string", condition: {field: "cateringEnabled", value: true}}
+          - {label: "Button Link", name: "cateringButtonLink", widget: "string", hint: "WhatsApp link or /contact", condition: {field: "cateringEnabled", value: true}}
+
           - {label: "Delivery Mode", name: "deliveryMode", widget: "select", options: [{label: "Flat Fee", value: "flat"}, {label: "Free", value: "free"}, {label: "Custom Rules", value: "custom"}]}
           - {label: "Flat Delivery Fee (₦)", name: "deliveryFlatFee", widget: "number"}
           - {label: "Free Delivery Above (₦)", name: "deliveryFreeThreshold", widget: "number"}

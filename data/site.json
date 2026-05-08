@@ -24,5 +24,11 @@
   "deliveryFlatFee": 1000,
   "deliveryFreeThreshold": 0,
   "deliveryCustomText": "Within Lagos: ₦1,000 | Outside Lagos: ₦2,000 | Pickup: Free. Call 0803xxx for Island rates.",
-  "deliveryAreas": "Yaba, Surulere, Ikeja"
+  "deliveryAreas": "Yaba, Surulere, Ikeja",
+  "cateringEnabled": true,
+  "cateringTitle": "Planning a Party?",
+  "cateringText": "We handle bulk orders for weddings, birthdays, and corporate events with the same 'Mama Nkechi' touch.",
+  "cateringImage": "https://images.unsplash.com/photo-1555244162-803834f70033",
+  "cateringButtonText": "Get a Custom Quote",
+  "cateringButtonLink": "https://wa.me/2348012345678?text=I%20need%20bulk%20order%20quote"
 }
