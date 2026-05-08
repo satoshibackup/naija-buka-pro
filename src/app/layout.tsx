@@ -3,7 +3,6 @@ import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
-import FloatingCart from "@/components/FloatingCart";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import siteSettings from "@/../data/site.json";
 import { FaInstagram, FaFacebook, FaTwitter, FaTiktok } from 'react-icons/fa';
@@ -95,7 +94,6 @@ export default function RootLayout({
           </div>
         </footer>
 
-        <FloatingCart />
         <WhatsAppButton />
         <Toaster position="top-center" />
       </body>

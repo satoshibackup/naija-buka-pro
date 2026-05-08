@@ -2,31 +2,51 @@
   {
     "id": "1",
     "name": "Smokey Jollof Rice",
-    "price": 2500,
-    "description": "Authentic firewood smokey jollof rice served with grilled chicken, moin-moin and fried plantain.",
-    "image": "https://images.unsplash.com/photo-1544025162-d76694265947",
-    "stock": 10,
     "category": "Rice",
+    "price": 4500,
+    "description": "Authentic firewood smokey jollof served with fried plantain and your choice of protein.",
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947",
+    "stock": 15,
     "featured": true
   },
   {
     "id": "2",
     "name": "Special Egusi Soup",
-    "price": 3000,
-    "description": "Rich melon seed soup with assorted meat, stockfish, and spinach. Served with your choice of swallow.",
-    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445",
-    "stock": 5,
     "category": "Soups",
+    "price": 5500,
+    "description": "Rich melon seed soup with assorted meat, stockfish, and spinach. Best with Pounded Yam.",
+    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445",
+    "stock": 10,
     "featured": true
   },
   {
     "id": "3",
     "name": "Gourmet Beef Suya",
-    "price": 1500,
-    "description": "Spiced grilled beef skewers with extra yaji spice, onions, and cabbage.",
-    "image": "https://images.unsplash.com/photo-1526318472351-c75fcf070305",
-    "stock": 0,
     "category": "Grills",
+    "price": 3500,
+    "description": "Thinly sliced grilled beef spiced with authentic Yaji. Served with onions and tomatoes.",
+    "image": "https://images.unsplash.com/photo-1526318472351-c75fcf070305",
+    "stock": 20,
+    "featured": true
+  },
+  {
+    "id": "4",
+    "name": "Pounded Yam",
+    "category": "Sides",
+    "price": 1000,
+    "description": "Freshly pounded local yam, smooth and stretchy. Perfect for any of our soups.",
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    "stock": 50,
+    "featured": false
+  },
+  {
+    "id": "5",
+    "name": "Zobo Drink",
+    "category": "Drinks",
+    "price": 1200,
+    "description": "Chilled hibiscus flower drink infused with ginger, cloves, and pineapple.",
+    "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd",
+    "stock": 30,
     "featured": false
   }
 ]
