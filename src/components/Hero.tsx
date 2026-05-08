@@ -1,55 +1,51 @@
-'use client';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import siteSettings from '@/../data/site.json';
-import { ChevronRight } from 'lucide-react';
-import Link from 'next/link';
+'use client'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, EffectFade } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/effect-fade'
+import site from '@/../data/site.json'
 
 export default function Hero() {
-  const [firstPart, ...rest] = siteSettings.heroTitle.split('&');
-  const secondPart = rest.join('&');
-
   return (
-    <div className="relative h-[80vh] md:h-[70vh] flex items-center overflow-hidden">
+    <div className="relative h-screen w-full">
       <Swiper
         modules={[Autoplay, EffectFade]}
         effect="fade"
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop={true}
-        className="absolute inset-0 z-0 h-full w-full"
+        className="h-full w-full"
       >
-        {siteSettings.heroImages.map((img, i) => (
+        {site.heroImages.map((img, i) => (
           <SwiperSlide key={i}>
             <div 
               className="h-full w-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${img})` }}
-            >
-              <div className="absolute inset-0 bg-black/40" />
-            </div>
+              style={{backgroundImage: `url(${img})`}}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
+      
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/50 z-10" />
+      
+      {/* Centered content */}
+      <div className="absolute inset-0 z-20 flex items-center justify-center text-center px-4">
         <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6 tracking-normal">
-            {firstPart} <span className="text-accent">& {secondPart.trim()}</span>
+          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+            {site.heroTitle}
+            <span className="text-accent"> Correct Soup</span> in Lagos
           </h1>
-          <p className="text-lg md:text-xl text-white/90 mb-10 max-w-xl font-medium opacity-90">
-            {siteSettings.heroSubtitle}
+          <p className="text-lg md:text-xl text-white/90 mt-6 max-w-2xl mx-auto">
+            {site.heroSubtitle}
           </p>
-          
-          <Link
-            href="#menu"
-            className="inline-flex bg-accent text-primary px-8 py-4 rounded-xl text-lg font-bold items-center gap-2 hover:scale-105 transition-all shadow-lg shadow-accent/20"
+          <a 
+            href="#menu" 
+            className="mt-8 inline-block bg-accent text-primary px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition"
           >
-            Order Now <ChevronRight size={20} />
-          </Link>
+            Order Now
+          </a>
         </div>
       </div>
     </div>
-  );
+  )
 }
