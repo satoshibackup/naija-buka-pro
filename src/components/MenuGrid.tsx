@@ -41,19 +41,6 @@ export default function MenuGrid() {
           </div>
         )}
 
-        <div className="mt-32 p-16 bg-primary rounded-[4rem] text-center relative overflow-hidden group shadow-2xl">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-1000"></div>
-          <h3 className="text-4xl font-black text-white mb-6 relative z-10 tracking-tighter">Planning a Party?</h3>
-          <p className="text-accent font-bold text-xl mb-10 relative z-10 max-w-lg mx-auto leading-relaxed">
-            We handle bulk orders for weddings, birthdays, and corporate events with the same "Mama Nkechi" touch.
-          </p>
-          <a
-            href="https://wa.me/234800NAIJABUKA"
-            className="inline-flex bg-accent text-primary px-12 py-5 rounded-2xl font-black text-lg hover:bg-white transition-all relative z-10"
-          >
-            GET A CUSTOM QUOTE
-          </a>
-        </div>
       </div>
     </section>
   );

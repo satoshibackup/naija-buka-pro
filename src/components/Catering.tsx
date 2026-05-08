@@ -25,7 +25,7 @@ export default function Catering() {
             </p>
             <a 
               href={site.cateringButtonLink}
-              className="inline-block bg-accent text-primary px-8 py-4 rounded-full font-bold hover:scale-105 transition shadow-lg shadow-accent/20"
+              className="inline-block bg-accent text-primary px-8 py-4 rounded-full font-bold hover:scale-105 transition"
             >
               {site.cateringButtonText}
             </a>
