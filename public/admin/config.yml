@@ -40,5 +40,12 @@ collections:
           - { label: "Hero Title", name: "heroTitle", widget: "string" }
           - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
           - { label: "Hero Image", name: "heroImage", widget: "image" }
-          - { label: "WhatsApp Number", name: "whatsappNumber", widget: "string" }
-          - { label: "Store Address", name: "address", widget: "string" }
+          - { label: "WhatsApp Number", name: "whatsappNumber", widget: "string", hint: "Format: 2348012345678" }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+          - { label: "Twitter URL", name: "twitter", widget: "string", required: false }
+          - { label: "TikTok URL", name: "tiktok", widget: "string", required: false }
+          - { label: "About Title", name: "aboutTitle", widget: "string" }
+          - { label: "About Text", name: "aboutText", widget: "text" }
+          - { label: "About Image", name: "aboutImage", widget: "image" }
+          - { label: "Address", name: "address", widget: "text" }

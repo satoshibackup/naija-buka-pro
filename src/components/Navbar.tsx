@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, User, Leaf, Menu as MenuIcon } from 'lucide-react';
+import { ShoppingCart, Leaf, Menu as MenuIcon, X } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
 import { useEffect, useState } from 'react';
 import siteSettings from '@/../data/site.json';
@@ -9,6 +9,7 @@ import siteSettings from '@/../data/site.json';
 export default function Navbar() {
   const cart = useCartStore((state) => state.cart);
   const [mounted, setMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -16,46 +17,79 @@ export default function Navbar() {
 
   const cartCount = mounted ? cart.reduce((acc, item) => acc + item.quantity, 0) : 0;
 
+  const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Menu', href: '/#menu' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '#footer' },
+  ];
+
   return (
-    <nav className="sticky top-0 z-50 bg-primary shadow-2xl border-b border-white/5">
+    <nav className="sticky top-0 z-50 bg-primary shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
+          {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-black text-accent flex items-center gap-3 tracking-tighter">
-              <div className="bg-accent p-1.5 rounded-xl shadow-lg shadow-black/20">
-                <Leaf className="text-primary fill-primary" size={24} />
-              </div>
-              <span className="uppercase">{siteSettings.brandName}</span>
+            <Link href="/" className="text-xl font-black text-accent flex items-center gap-2">
+              <Leaf className="text-accent fill-accent" size={24} />
+              <span className="uppercase tracking-tighter">{siteSettings.brandName}</span>
             </Link>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-6">
-            <Link 
-              href="/admin" 
-              className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white/90 rounded-xl transition-all flex items-center gap-2 text-sm font-bold border border-white/5 group"
-            >
-              <User size={18} className="group-hover:text-accent" />
-              <span className="hidden sm:inline">Portal</span>
-            </Link>
-            
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name} 
+                href={link.href}
+                className="text-white/80 hover:text-accent font-bold text-sm transition-colors"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Icons */}
+          <div className="flex items-center gap-4">
             <Link 
               href="/cart" 
-              className="relative p-3 bg-accent/10 hover:bg-accent text-accent hover:text-primary rounded-xl transition-all duration-300 group shadow-inner"
+              className="relative p-2 text-accent hover:scale-110 transition-transform"
             >
-              <ShoppingCart size={22} className="group-hover:scale-110 transition-transform" />
+              <ShoppingCart size={24} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-6 h-6 text-[10px] font-black leading-none text-primary transform bg-accent rounded-full border-2 border-primary shadow-lg">
+                <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-[10px] font-black text-primary bg-accent rounded-full border-2 border-primary">
                   {cartCount}
                 </span>
               )}
             </Link>
             
-            <button className="sm:hidden p-2 text-accent">
-              <MenuIcon size={28} />
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-accent"
+            >
+              {isMobileMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-primary border-t border-white/5 p-6 animate-fade-in">
+          <div className="flex flex-col gap-6">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name} 
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-white text-lg font-bold"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
