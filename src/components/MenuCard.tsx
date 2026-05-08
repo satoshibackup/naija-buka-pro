@@ -1,7 +1,7 @@
 'use client';
 
-import { MenuItem, useCartStore } from '@/store/useCartStore';
-import { Plus, Share2 } from 'lucide-react';
+import { useCartStore } from '@/store/useCartStore';
+import { Plus, Share2, Tag } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function MenuCard({ item }: { item: any }) {
@@ -13,13 +13,14 @@ export default function MenuCard({ item }: { item: any }) {
     addToCart(item);
     toast.success(`${item.name} added to your pot!`, {
       style: {
-        background: '#0B4D2A',
+        background: 'var(--primary)',
         color: '#FFFBF2',
-        borderRadius: '12px',
+        borderRadius: '16px',
+        fontWeight: '800',
       },
       iconTheme: {
-        primary: '#D4AF37',
-        secondary: '#0B4D2A',
+        primary: 'var(--accent)',
+        secondary: 'var(--primary)',
       },
     });
   };
@@ -30,57 +31,71 @@ export default function MenuCard({ item }: { item: any }) {
   };
 
   return (
-    <div className={`relative bg-white rounded-[2rem] shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group border border-gray-100/50 flex flex-col ${isSoldOut ? 'opacity-75 grayscale-[0.5]' : 'hover:-translate-y-2'}`}>
-      {/* Sold Out Badge */}
-      {isSoldOut && (
-        <div className="absolute top-4 left-4 z-20 bg-red-600 text-white text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-lg">
-          Sold Out
-        </div>
-      )}
+    <div className={`relative bg-white rounded-[3rem] shadow-2xl overflow-hidden hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] transition-all duration-500 group border border-gray-100/50 flex flex-col ${isSoldOut ? 'opacity-75' : 'hover:-translate-y-4'}`}>
+      
+      {/* Category & Badges */}
+      <div className="absolute top-6 left-6 z-20 flex flex-col gap-2">
+        <span className="bg-white/90 backdrop-blur-md text-primary text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg border border-primary/5 flex items-center gap-1.5">
+          <Tag size={10} className="text-accent" /> {item.category || 'Special'}
+        </span>
+        {isSoldOut && (
+          <span className="bg-red-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg animate-pulse">
+            Sold Out
+          </span>
+        )}
+      </div>
 
       {/* Share Button */}
       <button
         onClick={handleWhatsAppShare}
-        className="absolute top-4 right-4 z-20 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:bg-accent hover:text-primary transition-all scale-0 group-hover:scale-100"
+        className="absolute top-6 right-6 z-20 w-12 h-12 bg-white/90 backdrop-blur-md rounded-2xl flex items-center justify-center text-primary shadow-xl hover:bg-accent transition-all scale-0 group-hover:scale-100 duration-300"
       >
-        <Share2 size={18} />
+        <Share2 size={20} />
       </button>
 
-      {/* Image Wrapper */}
-      <div className="relative aspect-[16/9] overflow-hidden">
+      {/* Image with Dynamic Gradient */}
+      <div className="relative aspect-[4/3] overflow-hidden">
         <img
           src={item.image}
           alt={item.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${isSoldOut ? 'grayscale' : ''}`}
         />
         {!isSoldOut && (
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-             <p className="text-white text-xs font-medium translate-y-4 group-hover:translate-y-0 transition-transform">Perfectly prepared by our master chefs</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+             <span className="text-accent font-black text-xs uppercase tracking-widest mb-1">Chef's Choice</span>
+             <p className="text-white text-sm font-medium leading-tight">Authentic recipe, fresh daily.</p>
           </div>
         )}
       </div>
 
-      {/* Content */}
-      <div className="p-8 flex-grow flex flex-col">
-        <div className="flex justify-between items-start mb-4">
-          <h3 className="text-2xl font-extrabold text-gray-900 leading-tight">{item.name}</h3>
-          <span className="text-primary font-black text-xl tracking-tighter bg-accent/10 px-3 py-1 rounded-lg">₦{item.price.toLocaleString()}</span>
+      {/* Content Section */}
+      <div className="p-10 flex-grow flex flex-col bg-white">
+        <div className="flex justify-between items-start mb-6">
+          <h3 className="text-3xl font-black text-gray-900 leading-none tracking-tighter">{item.name}</h3>
         </div>
-        <p className="text-gray-600 text-sm leading-relaxed mb-8 flex-grow">
+        
+        <p className="text-gray-500 text-sm leading-relaxed mb-10 flex-grow font-medium">
           {item.description}
         </p>
 
-        <button
-          onClick={handleAddToCart}
-          disabled={isSoldOut}
-          className={`w-full py-4 rounded-2xl font-extrabold flex items-center justify-center gap-3 transition-all shadow-md active:scale-95 ${
-            isSoldOut 
-            ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-            : 'bg-accent text-primary hover:bg-primary hover:text-accent shadow-accent/20'
-          }`}
-        >
-          {isSoldOut ? 'Unavailable' : <><Plus size={20} /> Add to Pot</>}
-        </button>
+        <div className="flex items-center justify-between gap-6 pt-6 border-t border-gray-50">
+          <div className="flex flex-col">
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Price</span>
+            <span className="text-primary font-black text-3xl tracking-tighter">₦{item.price.toLocaleString()}</span>
+          </div>
+          
+          <button
+            onClick={handleAddToCart}
+            disabled={isSoldOut}
+            className={`px-8 py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl ${
+              isSoldOut 
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200' 
+              : 'bg-accent text-primary hover:bg-primary hover:text-accent shadow-accent/20 border border-accent/20'
+            }`}
+          >
+            {isSoldOut ? 'RESTOCKING' : <><Plus size={24} /> ADD TO POT</>}
+          </button>
+        </div>
       </div>
     </div>
   );

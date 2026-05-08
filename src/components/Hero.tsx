@@ -1,74 +1,77 @@
+'use client';
+
 import Link from 'next/link';
 import { ChevronRight, Zap, ShieldCheck, CreditCard } from 'lucide-react';
+import siteSettings from '@/../data/site.json';
 
 export default function Hero() {
   return (
-    <div className="relative h-[85vh] flex items-center overflow-hidden">
-      {/* Background Image with Overlay */}
+    <div className="relative h-[90vh] flex items-center overflow-hidden">
+      {/* Background Image with Advanced Overlay */}
       <div className="absolute inset-0 z-0">
         <img
           className="h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-          alt="Authentic Nigerian Jollof Rice"
+          src={siteSettings.heroImage}
+          alt={siteSettings.brandName}
         />
-        <div className="absolute inset-0 bg-primary/40 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/60 to-transparent"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
-        <div className="max-w-3xl text-white">
-          <div className="inline-flex items-center gap-2 bg-accent/20 backdrop-blur-md border border-accent/30 text-accent px-4 py-2 rounded-full text-sm font-bold mb-6 animate-fade-in">
-            <span className="relative flex h-2 w-2">
+        <div className="max-w-4xl text-white">
+          <div className="inline-flex items-center gap-3 bg-accent/20 backdrop-blur-xl border border-accent/30 text-accent px-5 py-2.5 rounded-2xl text-xs font-black mb-8 animate-fade-in tracking-widest shadow-2xl">
+            <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
             </span>
-            #1 IN LAGOS DELIVERY
+            PREMIUM LAGOS BUISNESS
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-6 drop-shadow-2xl">
-            Hot Amala & <br />
-            <span className="text-accent">Correct Soup</span> <br />
-            in Lagos
+          <h1 className="text-6xl md:text-8xl font-black leading-[0.95] mb-8 drop-shadow-2xl tracking-tighter italic">
+            {siteSettings.heroTitle.split(' & ')[0]} <br />
+            <span className="text-accent">& {siteSettings.heroTitle.split(' & ')[1]}</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-100 mb-10 max-w-xl font-medium opacity-90">
-            Order authentic Naija dishes prepared by top local chefs. Delivered piping hot to your doorstep in 30 minutes.
+          <p className="text-xl md:text-2xl text-gray-200 mb-12 max-w-2xl font-medium leading-relaxed opacity-95">
+            {siteSettings.heroSubtitle}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-6">
             <Link
               href="#menu"
-              className="bg-accent text-primary px-10 py-5 rounded-2xl text-lg font-extrabold flex items-center justify-center gap-2 hover:bg-white transition-all transform hover:-translate-y-1 shadow-2xl"
+              className="bg-accent text-primary px-12 py-6 rounded-[2rem] text-xl font-black flex items-center justify-center gap-3 hover:bg-white transition-all transform hover:-translate-y-2 shadow-[0_20px_50px_rgba(212,175,55,0.3)]"
             >
-              Order Now <ChevronRight size={24} />
+              ORDER NOW <ChevronRight size={28} />
             </Link>
           </div>
         </div>
 
-        {/* Stats Section */}
-        <div className="absolute bottom-[-50px] left-4 right-4 max-w-5xl mx-auto hidden md:grid grid-cols-3 gap-6 bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center text-accent">
-              <Zap size={32} />
+        {/* Floating Stats Bar */}
+        <div className="absolute bottom-[-60px] left-4 right-4 max-w-6xl mx-auto hidden lg:grid grid-cols-3 gap-10 bg-white p-12 rounded-[3.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-gray-100 z-20">
+          <div className="flex items-center gap-6">
+            <div className="w-16 h-16 bg-accent/10 rounded-3xl flex items-center justify-center text-accent shadow-inner">
+              <Zap size={36} />
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 text-lg">30min Delivery</h4>
-              <p className="text-gray-500 text-sm">Express service across VI & Lekki</p>
+              <h4 className="font-black text-gray-900 text-xl tracking-tight">30min Delivery</h4>
+              <p className="text-gray-500 font-medium text-sm">VI, Lekki, Ikoyi & Environs</p>
             </div>
           </div>
-          <div className="flex items-center gap-4 border-x border-gray-100 px-6">
-            <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
-              <ShieldCheck size={32} />
+          <div className="flex items-center gap-6 border-x border-gray-100 px-10">
+            <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center text-primary shadow-inner">
+              <ShieldCheck size={36} />
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 text-lg">100% Fresh</h4>
-              <p className="text-gray-500 text-sm">Made to order with local ingredients</p>
+              <h4 className="font-black text-gray-900 text-xl tracking-tight">100% Fresh</h4>
+              <p className="text-gray-500 font-medium text-sm">Farm to table ingredients</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
-              <CreditCard size={32} />
+          <div className="flex items-center gap-6">
+            <div className="w-16 h-16 bg-blue-50 rounded-3xl flex items-center justify-center text-blue-600 shadow-inner">
+              <CreditCard size={36} />
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 text-lg">Card Payments</h4>
-              <p className="text-gray-500 text-sm">Secure checkout via Paystack</p>
+              <h4 className="font-black text-gray-900 text-xl tracking-tight">Card Payments</h4>
+              <p className="text-gray-500 font-medium text-sm">Secure Paystack Checkout</p>
             </div>
           </div>
         </div>

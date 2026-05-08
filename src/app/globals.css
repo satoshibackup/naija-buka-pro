@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0B4D2A;
-  --color-accent: #D4AF37;
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
   --color-cream: #FFFBF2;
   --color-dark: #1A1A1A;
 }
@@ -10,8 +10,8 @@
 :root {
   --background: #FFFBF2;
   --foreground: #1A1A1A;
-  --primary: #0B4D2A;
-  --accent: #D4AF37;
+  --primary: #0B4D2A; /* Default fallback */
+  --accent: #D4AF37;  /* Default fallback */
 }
 
 body {
@@ -31,25 +31,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .premium-shadow {
-  shadow-offset: 0 4px;
-  shadow-blur: 20px;
-  shadow-color: rgba(11, 77, 42, 0.1);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
-/* Custom scrollbar for premium feel */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #FFFBF2;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #0B4D2A;
+  background: var(--primary);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4AF37;
+  background: var(--accent);
 }
+
+.bg-primary { background-color: var(--primary); }
+.text-primary { color: var(--primary); }
+.border-primary { border-color: var(--primary); }
+
+.bg-accent { background-color: var(--accent); }
+.text-accent { color: var(--accent); }
+.border-accent { border-color: var(--accent); }
