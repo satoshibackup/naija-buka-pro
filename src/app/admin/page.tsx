@@ -17,7 +17,7 @@ export default function AdminDashboard() {
   const [user, setUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'menu' | 'branding' | 'delivery'>('menu');
   const [items, setItems] = useState(menuData);
-  const [siteSettings, setSiteSettings] = useState(siteSettingsData);
+  const [siteSettings, setSiteSettings] = useState<any>(siteSettingsData);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -301,7 +301,7 @@ export default function AdminDashboard() {
                       <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest capitalize">{social} URL</label>
                       <input 
                         type="text" 
-                        value={siteSettings[social] || ''} 
+                        value={siteSettings[social as keyof any] || ''} 
                         onChange={(e) => handleUpdateSite(social, e.target.value)}
                         placeholder={`https://${social}.com/...`}
                         className="w-full bg-gray-50 border border-transparent focus:border-primary px-4 py-3 rounded-xl font-medium outline-none transition-all text-sm"

@@ -4,7 +4,7 @@
     "name": "Smokey Jollof Rice",
     "price": 2500,
     "description": "Authentic firewood smokey jollof rice served with grilled chicken, moin-moin and fried plantain.",
-    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop",
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947",
     "stock": 10,
     "category": "Rice",
     "featured": true
@@ -14,7 +14,7 @@
     "name": "Special Egusi Soup",
     "price": 3000,
     "description": "Rich melon seed soup with assorted meat, stockfish, and spinach. Served with your choice of swallow.",
-    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=800&auto=format&fit=crop",
+    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445",
     "stock": 5,
     "category": "Soups",
     "featured": true
@@ -24,7 +24,7 @@
     "name": "Gourmet Beef Suya",
     "price": 1500,
     "description": "Spiced grilled beef skewers with extra yaji spice, onions, and cabbage.",
-    "image": "https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=800&auto=format&fit=crop",
+    "image": "https://images.unsplash.com/photo-1526318472351-c75fcf070305",
     "stock": 0,
     "category": "Grills",
     "featured": false
