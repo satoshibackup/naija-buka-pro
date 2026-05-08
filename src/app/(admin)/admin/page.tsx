@@ -20,6 +20,7 @@ export default function AdminPage() {
             name: 'test-repo',
             local_backend: true
           },
+          local_backend: true,
           media_folder: "public/uploads",
           public_folder: "/uploads",
           collections: [
