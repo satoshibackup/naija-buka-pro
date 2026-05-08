@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Leaf, Menu as MenuIcon, X } from 'lucide-react';
+import { ShoppingCart, Menu as MenuIcon, X } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
 import { useEffect, useState } from 'react';
 import siteSettings from '@/../data/site.json';
@@ -33,15 +33,24 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/" className="text-xl font-black text-accent flex items-center gap-2">
-                {siteSettings.logo && siteSettings.logo !== "" ? (
-                  <img src={siteSettings.logo} alt={siteSettings.brandName} className="h-10 w-auto object-contain" />
-                ) : (
-                  <>
-                    <Leaf className="text-accent fill-accent" size={24} />
-                    <span className="uppercase tracking-tighter">{siteSettings.brandName}</span>
-                  </>
-                )}
+              <Link href="/" className="flex items-center">
+                {siteSettings.logo && siteSettings.logo.startsWith('http')? (
+                  <img 
+                    src={siteSettings.logo} 
+                    alt={siteSettings.brandName} 
+                    className="h-10 w-auto"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = 'none';
+                      const next = e.currentTarget.nextElementSibling as HTMLElement;
+                      if (next) next.style.display = 'block';
+                    }}
+                  />
+                ) : null}
+                <span 
+                  className={`text-2xl font-bold text-accent ${siteSettings.logo ? 'hidden' : 'block'}`}
+                >
+                  {siteSettings.brandName}
+                </span>
               </Link>
             </div>
 
