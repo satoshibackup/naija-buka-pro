@@ -1,61 +1,85 @@
 'use client';
 
 import { MenuItem, useCartStore } from '@/store/useCartStore';
-import { ShoppingCart, Share2 } from 'lucide-react';
+import { Plus, Share2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-export default function MenuCard({ item }: { item: MenuItem }) {
+export default function MenuCard({ item }: { item: any }) {
   const addToCart = useCartStore((state) => state.addToCart);
+  const isSoldOut = item.stock === 0;
 
   const handleAddToCart = () => {
+    if (isSoldOut) return;
     addToCart(item);
-    toast.success(`${item.name} added to cart!`, {
+    toast.success(`${item.name} added to your pot!`, {
       style: {
-        border: '1px solid #16a34a',
-        padding: '16px',
-        color: '#16a34a',
+        background: '#0B4D2A',
+        color: '#FFFBF2',
+        borderRadius: '12px',
       },
       iconTheme: {
-        primary: '#16a34a',
-        secondary: '#FFFAEE',
+        primary: '#D4AF37',
+        secondary: '#0B4D2A',
       },
     });
   };
 
   const handleWhatsAppShare = () => {
-    const text = `Check out this delicious ${item.name} from Naija Buka Pro! Only ₦${item.price.toLocaleString()}. Order here: ${window.location.origin}`;
+    const text = `Check out this ${item.name} from Naija Buka Pro! Only ₦${item.price.toLocaleString()}. Order here: ${window.location.origin}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow border border-gray-100 group">
-      <div className="relative h-48 overflow-hidden">
+    <div className={`relative bg-white rounded-[2rem] shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group border border-gray-100/50 flex flex-col ${isSoldOut ? 'opacity-75 grayscale-[0.5]' : 'hover:-translate-y-2'}`}>
+      {/* Sold Out Badge */}
+      {isSoldOut && (
+        <div className="absolute top-4 left-4 z-20 bg-red-600 text-white text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-lg">
+          Sold Out
+        </div>
+      )}
+
+      {/* Share Button */}
+      <button
+        onClick={handleWhatsAppShare}
+        className="absolute top-4 right-4 z-20 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-primary shadow-lg hover:bg-accent hover:text-primary transition-all scale-0 group-hover:scale-100"
+      >
+        <Share2 size={18} />
+      </button>
+
+      {/* Image Wrapper */}
+      <div className="relative aspect-[16/9] overflow-hidden">
         <img
           src={item.image}
           alt={item.name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute top-2 right-2 flex gap-2">
-          <button
-            onClick={handleWhatsAppShare}
-            className="p-2 bg-white/90 rounded-full text-primary hover:bg-primary hover:text-white transition-colors shadow-sm"
-            title="Share on WhatsApp"
-          >
-            <Share2 size={18} />
-          </button>
-        </div>
+        {!isSoldOut && (
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+             <p className="text-white text-xs font-medium translate-y-4 group-hover:translate-y-0 transition-transform">Perfectly prepared by our master chefs</p>
+          </div>
+        )}
       </div>
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-          <span className="text-primary font-bold">₦{item.price.toLocaleString()}</span>
+
+      {/* Content */}
+      <div className="p-8 flex-grow flex flex-col">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-2xl font-extrabold text-gray-900 leading-tight">{item.name}</h3>
+          <span className="text-primary font-black text-xl tracking-tighter bg-accent/10 px-3 py-1 rounded-lg">₦{item.price.toLocaleString()}</span>
         </div>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
+        <p className="text-gray-600 text-sm leading-relaxed mb-8 flex-grow">
+          {item.description}
+        </p>
+
         <button
           onClick={handleAddToCart}
-          className="w-full flex items-center justify-center gap-2 bg-primary text-white py-2 rounded-lg hover:bg-green-700 transition-colors font-medium"
+          disabled={isSoldOut}
+          className={`w-full py-4 rounded-2xl font-extrabold flex items-center justify-center gap-3 transition-all shadow-md active:scale-95 ${
+            isSoldOut 
+            ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+            : 'bg-accent text-primary hover:bg-primary hover:text-accent shadow-accent/20'
+          }`}
         >
-          <ShoppingCart size={18} /> Add to Cart
+          {isSoldOut ? 'Unavailable' : <><Plus size={20} /> Add to Pot</>}
         </button>
       </div>
     </div>

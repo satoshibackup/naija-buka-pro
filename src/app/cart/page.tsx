@@ -1,7 +1,7 @@
 'use client';
 
 import { useCartStore } from '@/store/useCartStore';
-import { Trash2, Plus, Minus, CreditCard, ArrowLeft } from 'lucide-react';
+import { Trash2, Plus, Minus, CreditCard, ArrowLeft, ShieldCheck, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { usePaystackPayment } from 'react-paystack';
 import toast from 'react-hot-toast';
@@ -20,14 +20,16 @@ export default function CartPage() {
   const config = {
     reference: (new Date()).getTime().toString(),
     email: email || 'customer@example.com',
-    amount: total * 100, // Paystack amount is in kobo
+    amount: total * 100,
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '',
   };
 
   const initializePayment = usePaystackPayment(config);
 
   const onSuccess = () => {
-    toast.success('Order received! We’ll contact you');
+    toast.success('Order received! Your food is being prepared.', {
+      style: { background: '#0B4D2A', color: '#FFFBF2' }
+    });
     clearCart();
   };
 
@@ -39,112 +41,145 @@ export default function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center p-4">
-        <div className="bg-gray-100 p-8 rounded-full mb-6">
-          <Trash2 size={48} className="text-gray-400" />
+      <div className="min-h-[80vh] flex flex-col items-center justify-center p-4 bg-cream">
+        <div className="w-32 h-32 bg-primary/5 rounded-full flex items-center justify-center mb-8 border-2 border-dashed border-primary/20">
+          <span className="text-6xl">🍲</span>
         </div>
-        <h2 className="text-2xl font-bold mb-4 text-gray-900">Your cart is empty</h2>
-        <p className="text-gray-500 mb-8">Looks like you haven't added anything to your cart yet.</p>
+        <h2 className="text-4xl font-black mb-4 text-gray-900">Your pot is empty</h2>
+        <p className="text-gray-500 mb-10 max-w-sm text-center font-medium opacity-80">The fire is ready, but you haven't added anything to your order yet.</p>
         <Link 
-          href="/" 
-          className="bg-primary text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-bold"
+          href="/#menu" 
+          className="bg-primary text-accent px-12 py-5 rounded-2xl hover:scale-105 transition-all font-black shadow-2xl"
         >
-          Go Back to Menu
+          EXPLORE THE MENU
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="flex items-center gap-4 mb-8">
-        <Link href="/" className="text-gray-500 hover:text-primary transition-colors">
-          <ArrowLeft size={24} />
-        </Link>
-        <h1 className="text-3xl font-extrabold text-gray-900">Your Order Summary</h1>
-      </div>
+    <div className="bg-cream min-h-screen py-20">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row gap-12">
+          
+          {/* Order List */}
+          <div className="flex-grow">
+            <div className="flex items-center gap-4 mb-10">
+              <Link href="/" className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-primary shadow-sm hover:bg-primary hover:text-white transition-all">
+                <ArrowLeft size={24} />
+              </Link>
+              <h1 className="text-4xl font-black text-gray-900">Your Order</h1>
+            </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-        <div className="divide-y divide-gray-100">
-          {cart.map((item) => (
-            <div key={item.id} className="p-6 flex flex-col sm:flex-row items-center gap-6">
-              <img 
-                src={item.image} 
-                alt={item.name} 
-                className="w-24 h-24 object-cover rounded-lg"
-              />
-              <div className="flex-grow text-center sm:text-left">
-                <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-                <p className="text-primary font-bold">₦{item.price.toLocaleString()}</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                  <button 
-                    onClick={() => updateQuantity(item.id, -1)}
-                    className="p-2 hover:bg-gray-50 text-gray-600 transition-colors"
-                  >
-                    <Minus size={16} />
-                  </button>
-                  <span className="px-4 font-bold text-gray-900">{item.quantity}</span>
-                  <button 
-                    onClick={() => updateQuantity(item.id, 1)}
-                    className="p-2 hover:bg-gray-50 text-gray-600 transition-colors"
-                  >
-                    <Plus size={16} />
-                  </button>
+            <div className="space-y-6">
+              {cart.map((item) => (
+                <div key={item.id} className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center gap-6 group hover:shadow-md transition-all">
+                  <div className="relative w-28 h-28 shrink-0 overflow-hidden rounded-2xl">
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                    />
+                  </div>
+                  <div className="flex-grow text-center sm:text-left">
+                    <h3 className="text-xl font-extrabold text-gray-900 mb-1">{item.name}</h3>
+                    <p className="text-primary font-black text-lg">₦{item.price.toLocaleString()}</p>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center bg-gray-50 rounded-2xl p-1 border border-gray-200">
+                      <button 
+                        onClick={() => updateQuantity(item.id, -1)}
+                        className="w-10 h-10 flex items-center justify-center hover:bg-white rounded-xl text-primary transition-all shadow-sm"
+                      >
+                        <Minus size={18} />
+                      </button>
+                      <span className="px-5 font-black text-lg text-gray-900">{item.quantity}</span>
+                      <button 
+                        onClick={() => updateQuantity(item.id, 1)}
+                        className="w-10 h-10 flex items-center justify-center hover:bg-white rounded-xl text-primary transition-all shadow-sm"
+                      >
+                        <Plus size={18} />
+                      </button>
+                    </div>
+                    <button 
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-xl transition-all"
+                    >
+                      <Trash2 size={24} />
+                    </button>
+                  </div>
                 </div>
-                <button 
-                  onClick={() => removeFromCart(item.id)}
-                  className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                >
-                  <Trash2 size={20} />
-                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Summary Sidebar */}
+          <div className="w-full md:w-[400px]">
+            <div className="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-gray-100 sticky top-28">
+              <h2 className="text-2xl font-black text-gray-900 mb-8">Summary</h2>
+              
+              <div className="space-y-4 mb-8 pb-8 border-b border-gray-100">
+                <div className="flex justify-between text-gray-600 font-medium">
+                  <span>Subtotal</span>
+                  <span>₦{total.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-gray-600 font-medium">
+                  <span>Delivery Fee</span>
+                  <span className="text-green-600 font-bold">FREE</span>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center mb-10">
+                <span className="text-gray-900 font-bold text-lg">Total</span>
+                <span className="text-3xl font-black text-primary tracking-tighter">₦{total.toLocaleString()}</span>
+              </div>
+
+              <div className="mb-8">
+                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">
+                  Delivery Email
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="yourname@gmail.com"
+                  className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary/5 focus:bg-white outline-none transition-all font-medium text-gray-900"
+                />
+              </div>
+
+              <button
+                onClick={() => {
+                  if (!email) {
+                    toast.error('Please enter your email for delivery');
+                    return;
+                  }
+                  initializePayment({ onSuccess, onClose });
+                }}
+                className="w-full flex items-center justify-center gap-3 bg-accent text-primary py-5 rounded-2xl hover:bg-primary hover:text-accent transition-all font-black text-lg shadow-xl shadow-accent/20"
+              >
+                <CreditCard size={24} /> PAY NOW
+              </button>
+
+              <div className="mt-8 space-y-4">
+                <div className="flex items-center gap-3 text-gray-500 text-sm">
+                  <Truck size={18} className="text-primary" />
+                  <span>Doorstep delivery in 30-45 mins</span>
+                </div>
+                <div className="flex items-center gap-3 text-gray-500 text-sm">
+                  <ShieldCheck size={18} className="text-primary" />
+                  <span>Secure Paystack Checkout</span>
+                </div>
+              </div>
+
+              {/* Test Card Info */}
+              <div className="mt-8 p-4 bg-yellow-50 rounded-2xl border border-yellow-200">
+                <h4 className="text-[10px] font-black text-yellow-800 mb-2 uppercase tracking-widest">Dev Test Card:</h4>
+                <div className="font-mono text-xs text-yellow-700 space-y-1">
+                  <p>4084 0840 8408 4081</p>
+                  <p>CVV: 123 | PIN: 0000</p>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-
-        <div className="p-6 bg-gray-50">
-          <div className="flex justify-between items-center mb-6">
-            <span className="text-gray-600 text-lg">Total Amount</span>
-            <span className="text-3xl font-extrabold text-gray-900">₦{total.toLocaleString()}</span>
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address (for order confirmation)
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="customer@example.com"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
-            />
-          </div>
-
-          <button
-            onClick={() => {
-              if (!email) {
-                toast.error('Please enter your email');
-                return;
-              }
-              initializePayment({ onSuccess, onClose });
-            }}
-            className="w-full flex items-center justify-center gap-3 bg-primary text-white py-4 rounded-xl hover:bg-green-700 transition-all font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            <CreditCard size={24} /> Checkout with Paystack
-          </button>
-          
-          <div className="mt-8 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
-            <h4 className="text-sm font-bold text-yellow-800 mb-2 uppercase tracking-wider">Test Card Info:</h4>
-            <code className="text-xs text-yellow-700 block">Number: 4084 0840 8408 4081</code>
-            <code className="text-xs text-yellow-700 block">CVV: 123 | Exp: 12/30 | PIN: 0000</code>
-          </div>
-          
-          <div className="mt-4 flex items-center justify-center gap-2 text-gray-500 text-sm">
-            <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
-            Secure Payment Powered by Paystack
           </div>
         </div>
       </div>

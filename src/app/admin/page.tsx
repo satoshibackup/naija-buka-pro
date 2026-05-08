@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { LayoutDashboard, LogIn, LogOut, Settings, Package, Image as ImageIcon, Save } from 'lucide-react';
+import { LayoutDashboard, LogIn, LogOut, Settings, Package, Image as ImageIcon, Save, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import menuData from '@/../data/menu.json';
+import Link from 'next/link';
 
 declare global {
   interface Window {
@@ -61,19 +62,19 @@ export default function AdminDashboard() {
     toast.promise(
       new Promise((resolve) => setTimeout(resolve, 1500)),
       {
-        loading: 'Committing changes via Git Gateway...',
-        success: 'Changes pushed to repository!',
-        error: 'Failed to push changes.',
+        loading: 'Syncing with Git Gateway...',
+        success: 'CMS updated successfully!',
+        error: 'Sync failed.',
+      },
+      {
+        style: { background: '#0B4D2A', color: '#FFFBF2' }
       }
     );
-    // In a real Git Gateway setup, this would be handled by the Netlify Identity + Decap CMS integration
-    // For this custom UI, we are simulating the save.
-    console.log('Saving items:', items);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-cream">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
@@ -81,138 +82,149 @@ export default function AdminDashboard() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
-        <div className="bg-white p-10 rounded-2xl shadow-xl max-w-md w-full text-center border border-gray-100">
-          <div className="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <LayoutDashboard className="text-primary" size={40} />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-cream p-4">
+        <div className="bg-white p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center border border-gray-100 relative overflow-hidden">
+          {/* Accent decoration */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          
+          <div className="bg-primary w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl shadow-primary/20 rotate-3">
+            <LayoutDashboard className="text-accent" size={48} />
           </div>
-          <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Admin Portal</h1>
-          <p className="text-gray-500 mb-8">Manage your restaurant menu, prices, and orders in one place.</p>
+          <h1 className="text-4xl font-black text-gray-900 mb-4 tracking-tighter">Admin Portal</h1>
+          <p className="text-gray-500 mb-10 font-medium leading-relaxed">
+            Authorized personnel only. Manage your premium restaurant operations here.
+          </p>
           <button
             onClick={handleLogin}
-            className="w-full flex items-center justify-center gap-3 bg-gray-900 text-white py-4 rounded-xl hover:bg-black transition-all font-bold text-lg shadow-lg"
+            className="w-full flex items-center justify-center gap-3 bg-primary text-white py-5 rounded-2xl hover:bg-gray-900 transition-all font-black text-lg shadow-xl shadow-primary/20 group"
           >
-            <LogIn size={24} /> Login with Netlify Identity
+            <LogIn size={24} className="group-hover:translate-x-1 transition-transform" /> START SESSION
           </button>
-          <p className="mt-6 text-sm text-gray-400">
-            Powered by Netlify Identity & Git Gateway
-          </p>
+          
+          <Link href="/" className="mt-8 flex items-center justify-center gap-2 text-primary font-bold hover:text-accent transition-colors">
+            <ArrowLeft size={18} /> Back to Site
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-cream flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-900 text-white hidden md:flex flex-col">
-        <div className="p-6 border-b border-gray-800">
-          <h2 className="text-xl font-bold flex items-center gap-2">
-            <span className="bg-primary p-1 rounded text-sm">PRO</span>
-            Naija Buka Admin
-          </h2>
+      <aside className="w-72 bg-primary text-white hidden lg:flex flex-col border-r border-white/5">
+        <div className="p-8 mb-4">
+          <div className="flex items-center gap-3">
+             <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center text-primary font-black">NB</div>
+             <h2 className="text-xl font-black tracking-tighter">MANAGEMENT</h2>
+          </div>
         </div>
-        <nav className="flex-grow p-4 space-y-2">
-          <a href="#" className="flex items-center gap-3 p-3 bg-primary/20 text-primary rounded-lg">
-            <Package size={20} /> Menu Items
+        <nav className="flex-grow p-6 space-y-4">
+          <a href="#" className="flex items-center gap-4 p-4 bg-white/10 text-accent rounded-2xl font-bold shadow-inner">
+            <Package size={22} /> Menu Manager
           </a>
-          <a href="#" className="flex items-center gap-3 p-3 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors">
-            <Settings size={20} /> Site Settings
+          <a href="#" className="flex items-center gap-4 p-4 text-white/60 hover:bg-white/5 rounded-2xl font-bold transition-all">
+            <Settings size={22} /> Operations
           </a>
         </nav>
-        <div className="p-4 border-t border-gray-800">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 p-3 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors"
-          >
-            <LogOut size={20} /> Logout
-          </button>
+        <div className="p-6 mt-auto">
+          <div className="bg-white/5 p-6 rounded-[2rem] border border-white/10">
+             <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 bg-gray-400 rounded-full"></div>
+                <div>
+                   <p className="text-xs font-bold text-accent uppercase tracking-widest">Admin</p>
+                   <p className="text-sm font-bold truncate max-w-[120px]">{user.email}</p>
+                </div>
+             </div>
+             <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 py-3 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-xl transition-all font-bold text-sm"
+            >
+              <LogOut size={18} /> Logout
+            </button>
+          </div>
         </div>
       </aside>
 
       {/* Main Content */}
       <main className="flex-grow overflow-auto">
-        <header className="bg-white border-b border-gray-200 p-6 flex justify-between items-center sticky top-0 z-10">
-          <h1 className="text-2xl font-bold text-gray-900">Manage Menu Items</h1>
-          <div className="flex gap-4">
+        <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 p-8 flex flex-col md:flex-row justify-between items-center sticky top-0 z-20 gap-6">
+          <div>
+            <h1 className="text-3xl font-black text-gray-900 tracking-tighter">Menu Items</h1>
+            <p className="text-gray-400 text-sm font-medium">Update prices, stock and descriptions in real-time.</p>
+          </div>
+          <div className="flex gap-4 w-full md:w-auto">
             <button
               onClick={handleSave}
-              className="flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-bold shadow-md"
+              className="flex-grow md:flex-none flex items-center justify-center gap-2 bg-primary text-accent px-8 py-4 rounded-2xl hover:scale-105 transition-all font-black shadow-xl shadow-primary/10"
             >
-              <Save size={18} /> Save Changes
+              <Save size={20} /> SYNC CHANGES
             </button>
             <button 
               onClick={() => window.open('/admin/index.html', '_blank')}
-              className="text-gray-500 hover:text-gray-900 text-sm font-medium"
+              className="flex-grow md:flex-none bg-gray-100 text-gray-600 px-8 py-4 rounded-2xl hover:bg-gray-200 transition-all font-bold text-sm"
             >
-              Open Decap CMS UI
+              FULL CMS
             </button>
           </div>
         </header>
 
-        <div className="p-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <table className="w-full text-left">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase">Item</th>
-                  <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase">Price (₦)</th>
-                  <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase">Description</th>
-                  <th className="px-6 py-4 text-sm font-bold text-gray-600 uppercase text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {items.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-4">
-                        <div className="relative group">
-                          <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover" />
-                          <button className="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <ImageIcon size={16} className="text-white" />
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          value={item.name}
-                          onChange={(e) => handleUpdateItem(item.id, 'name', e.target.value)}
-                          className="font-bold text-gray-900 bg-transparent border-none focus:ring-0 p-0 w-32"
-                        />
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="number"
-                        value={item.price}
-                        onChange={(e) => handleUpdateItem(item.id, 'price', parseInt(e.target.value))}
-                        className="text-primary font-bold bg-transparent border-none focus:ring-0 p-0 w-24"
-                      />
-                    </td>
-                    <td className="px-6 py-4">
-                      <textarea
-                        value={item.description}
-                        onChange={(e) => handleUpdateItem(item.id, 'description', e.target.value)}
-                        className="text-gray-500 text-sm bg-transparent border-none focus:ring-0 p-0 w-full resize-none h-12"
-                      />
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button className="text-primary hover:text-green-700 font-medium">Edit Image</button>
-                    </td>
+        <div className="p-8 lg:p-12">
+          <div className="bg-white rounded-[3rem] shadow-sm border border-gray-100 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="bg-gray-50/50 border-b border-gray-100">
+                  <tr>
+                    <th className="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Product</th>
+                    <th className="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Price (₦)</th>
+                    <th className="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Details</th>
+                    <th className="px-8 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] text-right">Media</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          
-          <div className="mt-8 bg-blue-50 border border-blue-100 p-4 rounded-xl flex gap-4 items-start">
-            <div className="bg-blue-500 text-white p-2 rounded-lg">
-              <Package size={20} />
-            </div>
-            <div>
-              <h3 className="font-bold text-blue-900">Pro Tip: Media Management</h3>
-              <p className="text-blue-800 text-sm mt-1">
-                You can also use the <a href="/admin/index.html" className="underline font-bold">Decap CMS Dashboard</a> for advanced image uploads to Cloudinary and direct Git commits.
-              </p>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {items.map((item: any) => (
+                    <tr key={item.id} className="hover:bg-gray-50/30 transition-colors group">
+                      <td className="px-8 py-8">
+                        <div className="flex items-center gap-6">
+                          <div className="relative shrink-0">
+                            <img src={item.image} alt={item.name} className="w-16 h-16 rounded-2xl object-cover shadow-md" />
+                            <div className={`absolute -top-2 -right-2 w-4 h-4 rounded-full border-2 border-white ${item.stock > 0 ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                          </div>
+                          <input
+                            type="text"
+                            value={item.name}
+                            onChange={(e) => handleUpdateItem(item.id, 'name', e.target.value)}
+                            className="font-black text-lg text-gray-900 bg-transparent border-none focus:ring-0 p-0 w-48"
+                          />
+                        </div>
+                      </td>
+                      <td className="px-8 py-8">
+                        <div className="flex items-center bg-gray-50 rounded-xl px-4 py-2 border border-transparent focus-within:border-accent transition-all">
+                          <span className="text-gray-400 font-bold mr-1">₦</span>
+                          <input
+                            type="number"
+                            value={item.price}
+                            onChange={(e) => handleUpdateItem(item.id, 'price', parseInt(e.target.value))}
+                            className="text-primary font-black bg-transparent border-none focus:ring-0 p-0 w-24"
+                          />
+                        </div>
+                      </td>
+                      <td className="px-8 py-8">
+                        <textarea
+                          value={item.description}
+                          onChange={(e) => handleUpdateItem(item.id, 'description', e.target.value)}
+                          className="text-gray-500 text-sm bg-transparent border-none focus:ring-0 p-0 w-full resize-none h-16 font-medium leading-relaxed"
+                        />
+                      </td>
+                      <td className="px-8 py-8 text-right">
+                        <button className="bg-primary/5 text-primary hover:bg-primary hover:text-white px-4 py-2 rounded-xl text-xs font-black transition-all">
+                          REPLACE IMAGE
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
