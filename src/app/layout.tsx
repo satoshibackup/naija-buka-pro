@@ -30,15 +30,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: `
-          :root {
-            --primary: ${siteSettings.primaryColor};
-            --accent: ${siteSettings.accentColor};
-          }
-        `}} />
-      </head>
+    <html 
+      lang="en" 
+      className={`${poppins.variable} ${inter.variable}`}
+      style={{
+        '--primary': siteSettings.primaryColor,
+        '--accent': siteSettings.accentColor
+      } as React.CSSProperties}
+    >
       <body className="bg-cream font-sans min-h-screen flex flex-col antialiased">
         <Navbar />
         <main className="flex-grow">{children}</main>
@@ -61,6 +60,16 @@ export default function RootLayout({
                 {siteSettings.facebook && (
                   <a href={siteSettings.facebook} target="_blank" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-all text-white">
                     <FaFacebook size={20} />
+                  </a>
+                )}
+                {siteSettings.twitter && (
+                  <a href={siteSettings.twitter} target="_blank" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-all text-white">
+                    <FaTwitter size={20} />
+                  </a>
+                )}
+                {siteSettings.tiktok && (
+                  <a href={siteSettings.tiktok} target="_blank" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-all text-white">
+                    <FaTiktok size={20} />
                   </a>
                 )}
               </div>
