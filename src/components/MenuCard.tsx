@@ -14,7 +14,7 @@ export default function MenuCard({ item }: { item: any }) {
     toast.success(`${item.name} added to cart!`, {
       style: {
         background: 'var(--primary)',
-        color: '#FFFBF2',
+        color: 'var(--cream)',
         borderRadius: '12px',
         fontWeight: 'bold',
       },

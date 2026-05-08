@@ -57,7 +57,7 @@ export default function CartContent() {
 
   const onSuccess = () => {
     toast.success('Order received! We will contact you shortly.', {
-      style: { background: 'var(--primary)', color: '#FFFBF2', fontWeight: 'bold' }
+      style: { background: 'var(--primary)', color: 'var(--cream)', fontWeight: 'bold' }
     });
     clearCart();
   };

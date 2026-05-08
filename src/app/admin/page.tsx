@@ -68,7 +68,7 @@ export default function AdminDashboard() {
         success: 'Settings updated successfully!',
         error: 'Sync failed.',
       },
-      { style: { background: siteSettings.primaryColor, color: '#FFFBF2', fontWeight: 'bold' } }
+      { style: { background: siteSettings.primaryColor, color: 'var(--cream)', fontWeight: 'bold' } }
     );
   };
 

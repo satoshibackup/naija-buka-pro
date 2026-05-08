@@ -63,16 +63,6 @@ export default function RootLayout({
                     <FaFacebook size={20} />
                   </a>
                 )}
-                {siteSettings.twitter && (
-                  <a href={siteSettings.twitter} target="_blank" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-all text-white">
-                    <FaTwitter size={20} />
-                  </a>
-                )}
-                {siteSettings.tiktok && (
-                  <a href={siteSettings.tiktok} target="_blank" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-all text-white">
-                    <FaTiktok size={20} />
-                  </a>
-                )}
               </div>
             </div>
             

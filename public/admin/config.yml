@@ -29,36 +29,26 @@ collections:
     editor:
       preview: false
     files:
-      - name: "site_settings"
-        label: "Global Site Settings"
+      - name: "site"
+        label: "Site Settings"
         file: "data/site.json"
         fields:
-          - { label: "Logo", name: "logo", widget: "image" }
-          - { label: "Brand Name", name: "brandName", widget: "string" }
-          - { label: "Primary Color", name: "primaryColor", widget: "color" }
-          - { label: "Accent Color", name: "accentColor", widget: "color" }
-          - { label: "Hero Title", name: "heroTitle", widget: "string" }
-          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
-          - { label: "Hero Image", name: "heroImage", widget: "image" }
-          - { label: "WhatsApp Number", name: "whatsappNumber", widget: "string", hint: "Format: 2348012345678" }
-          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
-          - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
-          - { label: "Twitter URL", name: "twitter", widget: "string", required: false }
-          - { label: "TikTok URL", name: "tiktok", widget: "string", required: false }
-          - { label: "About Title", name: "aboutTitle", widget: "string" }
-          - { label: "About Text", name: "aboutText", widget: "text" }
-          - { label: "About Image", name: "aboutImage", widget: "image" }
-          - { label: "Address", name: "address", widget: "text" }
-          
-          # Delivery Settings
-          - label: "Delivery Mode"
-            name: "deliveryMode"
-            widget: "select"
-            options: 
-              - {label: "Flat Fee", value: "flat"}
-              - {label: "Free Delivery", value: "free"}
-              - {label: "Custom Rules", value: "custom"}
-          - {label: "Flat Delivery Fee (₦)", name: "deliveryFlatFee", widget: "number", default: 1000}
-          - {label: "Free Delivery Above (₦)", name: "deliveryFreeThreshold", widget: "number", default: 0, hint: "0 = disabled"}
-          - {label: "Custom Delivery Text", name: "deliveryCustomText", widget: "text", hint: "Shown in 'custom' mode"}
-          - {label: "Delivery Areas", name: "deliveryAreas", widget: "string", hint: "Areas you cover"}
+          - {label: "Logo", name: "logo", widget: "image"}
+          - {label: "Business Name", name: "brandName", widget: "string"}
+          - {label: "Primary Color", name: "primaryColor", widget: "color"}
+          - {label: "Accent Color", name: "accentColor", widget: "color"}
+          - {label: "Hero Title", name: "heroTitle", widget: "string"}
+          - {label: "Hero Subtitle", name: "heroSubtitle", widget: "text"}
+          - {label: "Hero Image", name: "heroImage", widget: "image"}
+          - {label: "WhatsApp Number", name: "whatsappNumber", widget: "string"}
+          - {label: "Instagram URL", name: "instagram", widget: "string", required: false}
+          - {label: "Facebook URL", name: "facebook", widget: "string", required: false}
+          - {label: "About Title", name: "aboutTitle", widget: "string"}
+          - {label: "About Text", name: "aboutText", widget: "text"}
+          - {label: "About Image", name: "aboutImage", widget: "image"}
+          - {label: "Address", name: "address", widget: "string"}
+          - {label: "Delivery Mode", name: "deliveryMode", widget: "select", options: [{label: "Flat Fee", value: "flat"}, {label: "Free", value: "free"}, {label: "Custom Rules", value: "custom"}]}
+          - {label: "Flat Delivery Fee (₦)", name: "deliveryFlatFee", widget: "number"}
+          - {label: "Free Delivery Above (₦)", name: "deliveryFreeThreshold", widget: "number"}
+          - {label: "Custom Delivery Rules", name: "deliveryCustomText", widget: "text"}
+          - {label: "Delivery Areas", name: "deliveryAreas", widget: "string"}

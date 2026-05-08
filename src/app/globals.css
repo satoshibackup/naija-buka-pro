@@ -3,13 +3,14 @@
 @theme {
   --color-primary: var(--primary);
   --color-accent: var(--accent);
-  --color-cream: #FFFBF2;
+  --color-cream: var(--cream);
   --color-dark: #1A1A1A;
 }
 
 :root {
   --background: #FFFBF2;
   --foreground: #1A1A1A;
+  --cream: #FFFBF2;
   --primary: #0B4D2A;
   --accent: #D4AF37;
 }
